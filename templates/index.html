@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .intro, .projects, .contact {
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#intro">Introduction</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="intro" class="intro">
+        <h1>Hyeseung Lee | Software Engineer</h1>
+        <p>Software | DevOps engineer from South Korea.</p>
+    </section>
+
+    <section id="projects" class="projects">
+        <h2>Projects</h2>
+        <div id="project-list"></div>
+        <p>Here are some of my notable projects:</p>
+    </section>
+    <script>
+        fetch("http://localhost:8080/api/projects")
+            .then(response => response.json())
+            .then(data => {
+                const projectList = document.getElementById("project-list");
+                data.forEach(project => {
+                    const div = document.createElement("div");
+                    div.innerHTML = `<h3>${project.name}</h3><p>${project.desc}</p>`;
+                    projectList.appendChild(div);
+                });
+            })
+            .catch(error => console.error("Error fetching projects:", error));
+    </script>
+
+    <section id="contact" class="contact">
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:hyeseung.lee.96@gmail.com">hyeseung.lee.96@gmail.com</a></p>
+        <p><a href="https://www.linkedin.com/in/hye-seung-lee/?locale=fr_FR" target="_blank">LinkedIn</a></p>
+        <p><a href="https://github.com/2hyes" target="_blank">Github</a></p>
+    </section>
+</body>
+</html>
